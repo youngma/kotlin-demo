@@ -34,6 +34,9 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:4.2.1")
     implementation("org.mapstruct:mapstruct:1.3.0.Final")
 
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    implementation("commons-codec",  "commons-codec", "1.15")
+
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
     kapt("com.querydsl:querydsl-apt:4.2.2:jpa")
