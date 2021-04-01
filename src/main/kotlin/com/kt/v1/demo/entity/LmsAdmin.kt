@@ -3,6 +3,7 @@ package com.kt.v1.demo.entity
 import com.kt.v1.demo.common.utils.EnumConverter
 import com.kt.v1.demo.common.utils.HasValue
 import com.kt.v1.demo.common.utils.buildValueMap
+import com.kt.v1.demo.common.utils.sha256
 import com.kt.v1.demo.dto.LmsAdminDto
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime
@@ -22,6 +23,7 @@ class LmsAdmin(
     @Column(name = "del_yn", nullable = false) var delYn: String = isDeleted.No.value,
     @CreatedDate @Column(name = "regdate", nullable = false) var regdate: LocalDateTime = LocalDateTime.now()
 ) {
+
     fun add(lmsAdmin: LmsAdminDto) {
         this.userId = lmsAdmin.userId
         this.userPass = lmsAdmin.userPass
@@ -29,6 +31,10 @@ class LmsAdmin(
         this.tel = lmsAdmin.tel
         this.mobile = lmsAdmin.mobile
         this.email = lmsAdmin.email
+    }
+
+    fun comparePassword(userPass: String): Boolean {
+        return this.userPass == userPass.sha256()
     }
 }
 //(override val value: Int): HasValue<Int> {

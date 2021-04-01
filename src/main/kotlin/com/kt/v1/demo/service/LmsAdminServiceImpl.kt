@@ -23,6 +23,15 @@ class LmsAdminServiceImpl(
     }
 
     override fun addAdmin(lmsAdminDto: LmsAdminDto): LmsAdminDto {
+
+        val searchAdmin = lmsAdminRepository.findAllByUserId(lmsAdminDto.userId)
+
+        if (searchAdmin != null) {
+            throw Exception("이미 등록된 사용자 입니다.")
+        }
+
+        lmsAdminDto.encryptionPassword();
+
         val newAdmin: LmsAdmin = lmsAdminMapper.addLmsAdmin(lmsAdminDto)
         lmsAdminRepository.save(newAdmin)
         return lmsAdminMapper.fromLmsAdmin(newAdmin)

@@ -1,5 +1,6 @@
 package com.kt.v1.demo.dto
 
+import com.kt.v1.demo.common.utils.sha256
 import com.kt.v1.demo.entity.UserLevel
 import com.kt.v1.demo.entity.isDeleted
 import java.time.LocalDateTime
@@ -15,4 +16,8 @@ data class LmsAdminDto (
     var userLevel: Int = UserLevel.ADMIN.value,
     var delYn: String = isDeleted.No.value,
     var regdate: LocalDateTime = LocalDateTime.now()
-)
+) {
+    fun encryptionPassword() {
+        this.userPass = (this).userPass.sha256()
+    }
+}

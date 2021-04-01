@@ -23,7 +23,13 @@ class MainController( private val lmsAdminRepository: LmsAdminRepository) {
 //
     @GetMapping("/admin/{userId}")
     fun getAdmin(@PathVariable userId: String): LmsAdmin {
-        return lmsAdminRepository.findAllByUserId(userId)
+        val user = lmsAdminRepository.findAllByUserId(userId)
+
+        if (user === null) {
+            throw Exception("등록된 사용자가 업습니다.")
+        }
+
+        return user
     }
 }
 
