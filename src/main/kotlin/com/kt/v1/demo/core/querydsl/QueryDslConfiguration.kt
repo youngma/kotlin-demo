@@ -1,4 +1,4 @@
-package com.kt.v1.demo.common.querydsl
+package com.kt.v1.demo.core.querydsl
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.context.annotation.Bean

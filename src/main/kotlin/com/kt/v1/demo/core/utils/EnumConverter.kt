@@ -1,4 +1,4 @@
-package com.kt.v1.demo.common.utils
+package com.kt.v1.demo.core.utils
 
 abstract class EnumConverter<in V, E: Enum<E>>(
     private val valueMap: Map<V, E>

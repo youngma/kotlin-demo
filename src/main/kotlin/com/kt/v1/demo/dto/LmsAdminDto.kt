@@ -1,6 +1,6 @@
 package com.kt.v1.demo.dto
 
-import com.kt.v1.demo.common.utils.sha256
+import com.kt.v1.demo.core.utils.sha256
 import com.kt.v1.demo.entity.UserLevel
 import com.kt.v1.demo.entity.isDeleted
 import java.time.LocalDateTime

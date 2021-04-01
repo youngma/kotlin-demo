@@ -1,9 +1,9 @@
 package com.kt.v1.demo.entity
 
-import com.kt.v1.demo.common.utils.EnumConverter
-import com.kt.v1.demo.common.utils.HasValue
-import com.kt.v1.demo.common.utils.buildValueMap
-import com.kt.v1.demo.common.utils.sha256
+import com.kt.v1.demo.core.utils.EnumConverter
+import com.kt.v1.demo.core.utils.HasValue
+import com.kt.v1.demo.core.utils.buildValueMap
+import com.kt.v1.demo.core.utils.sha256
 import com.kt.v1.demo.dto.LmsAdminDto
 import org.springframework.data.annotation.CreatedDate
 import java.time.LocalDateTime

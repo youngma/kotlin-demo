@@ -1,6 +1,5 @@
-package com.kt.v1.demo.common.utils
+package com.kt.v1.demo.core.utils
 
-import com.kt.v1.demo.entity.UserLevel
 import java.security.MessageDigest
 
 enum class HashAlgorithm(override val value: String): HasValue<String>  {
