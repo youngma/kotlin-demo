@@ -33,8 +33,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.querydsl:querydsl-jpa:4.2.1")
     implementation("org.mapstruct:mapstruct:1.3.0.Final")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
-    // https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation("commons-codec",  "commons-codec", "1.15")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
