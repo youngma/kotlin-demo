@@ -7,6 +7,7 @@ import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
 import com.kt.v1.demo.mapper.LmsAdminMapper
 import com.kt.v1.demo.repository.LmsAdminRepository
+import com.kt.v1.demo.repository.RLmsAdminRepository
 import com.kt.v1.demo.service.LmsAdminService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 class MainController(
     private val lmsAdminRepository: LmsAdminRepository,
     private val lmsAdminMapper: LmsAdminMapper,
-    private val lmsAdminService: LmsAdminService
+    private val lmsAdminService: LmsAdminService,
+    private var rLmsAdminRepository: RLmsAdminRepository,
     ) {
 
     @GetMapping("/first/{times}" )
