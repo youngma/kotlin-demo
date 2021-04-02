@@ -1,5 +1,7 @@
 package com.kt.v1.demo.service
 
+import com.kt.v1.demo.core.exception.CustomException
+import com.kt.v1.demo.core.exception.ServiceException
 import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
 import com.kt.v1.demo.mapper.LmsAdminMapper
@@ -35,5 +37,13 @@ class LmsAdminServiceImpl(
         val newAdmin: LmsAdmin = lmsAdminMapper.addLmsAdmin(lmsAdminDto)
         lmsAdminRepository.save(newAdmin)
         return lmsAdminMapper.fromLmsAdmin(newAdmin)
+    }
+
+    override fun findAdmin(userId: String): LmsAdminDto {
+
+        val admin = lmsAdminRepository.findAllByUserId(userId)
+            ?: throw ServiceException(CustomException.LOGIN_INFORMATION_NOT_FOUND)
+
+        return lmsAdminMapper.fromLmsAdmin(admin)
     }
 }

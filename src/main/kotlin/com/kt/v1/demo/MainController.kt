@@ -1,7 +1,13 @@
 package com.kt.v1.demo
 
+import com.kt.v1.demo.core.exception.CustomException
+import com.kt.v1.demo.core.exception.ServiceException
+import com.kt.v1.demo.core.wapper.ResultResponse
+import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
+import com.kt.v1.demo.mapper.LmsAdminMapper
 import com.kt.v1.demo.repository.LmsAdminRepository
+import com.kt.v1.demo.service.LmsAdminService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -9,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/main")
-class MainController( private val lmsAdminRepository: LmsAdminRepository) {
+class MainController(
+    private val lmsAdminRepository: LmsAdminRepository,
+    private val lmsAdminMapper: LmsAdminMapper,
+    private val lmsAdminService: LmsAdminService
+    ) {
 
     @GetMapping("/first/{times}" )
     fun firstPage(@PathVariable times: Int? = 0): Model {
@@ -17,19 +27,14 @@ class MainController( private val lmsAdminRepository: LmsAdminRepository) {
     }
 
     @GetMapping("/allAdmins")
-    fun allAdmins(): List<LmsAdmin> {
-        return lmsAdminRepository.findAll().map { LmsAdmin -> LmsAdmin }
+    fun allAdmins(): ResultResponse<List<LmsAdminDto>> {
+        return ResultResponse(lmsAdminRepository.findAll().map { LmsAdmin -> lmsAdminMapper.fromLmsAdmin(LmsAdmin) })
     }
-//
+
     @GetMapping("/admin/{userId}")
-    fun getAdmin(@PathVariable userId: String): LmsAdmin {
-        val user = lmsAdminRepository.findAllByUserId(userId)
-
-        if (user === null) {
-            throw Exception("등록된 사용자가 업습니다.")
-        }
-
-        return user
+    fun getAdmin(@PathVariable userId: String): ResultResponse<LmsAdminDto> {
+        val user = lmsAdminService.findAdmin(userId)
+        return ResultResponse(user)
     }
 }
 
