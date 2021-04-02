@@ -28,6 +28,5 @@ class RLmsAdminRepositoryImpl(
     override fun delete(id: String) {
         hashOperations.delete("LmsUser", id)
     }
-
 }
 
