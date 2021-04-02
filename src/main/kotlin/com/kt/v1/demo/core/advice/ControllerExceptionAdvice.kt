@@ -20,24 +20,24 @@ import javax.xml.bind.ValidationException
 class ControllerExceptionAdvice {
 
     @ExceptionHandler(ServiceException::class)
-    fun handleException(e: ServiceException): ResponseEntity<Any> {
-        val resultResponse = ResultResponse(e.httpStatus, e.code, e.message, null)
+    fun handleException(e: ServiceException): ResponseEntity<Any?> {
+        val resultResponse = ResultResponse<Any?>( e.code, e.message)
         log?.debug("#### {}", resultResponse)
         return ResponseEntity(resultResponse, e.httpStatus)
     }
 
     @ExceptionHandler(ValidationException::class, TypeMismatchException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleValidateException(e: Exception): ResultResponse<Nothing> {
-        val resultResponse = ResultResponse(HttpStatus.BAD_REQUEST, 40099, e.message, null)
+    fun handleValidateException(e: Exception): ResultResponse<Any?> {
+        val resultResponse = ResultResponse<Any?>(40099, e.message)
         log?.warn("#### {}", e.stackTrace as Any)
         return resultResponse
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResultResponse<Nothing> {
-        val resultResponse = ResultResponse(HttpStatus.BAD_REQUEST, 40099, e.message, null)
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResultResponse<Any?> {
+        val resultResponse = ResultResponse<Any?>(40099, e.message)
         val errorMessages = e.bindingResult.fieldErrors
             .map { fe: FieldError ->
                 String.format(
@@ -57,17 +57,17 @@ class ControllerExceptionAdvice {
         UnauthorizedException::class
     )
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    fun handleException(e: AccessDeniedException): ResultResponse<Nothing> {
-        return ResultResponse(HttpStatus.UNAUTHORIZED, 40100, e.message, null)
+    fun handleException(e: AccessDeniedException): ResultResponse<Any?> {
+        return ResultResponse(40100, e.message)
     }
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleException(e: Exception): ResultResponse<Nothing> {
+    fun handleException(e: Exception): ResultResponse<Any?> {
         log?.warn("#### {}", e.toString())
         for (stack in e.stackTrace) {
             log?.warn("#### {}", stack)
         }
-        return ResultResponse(HttpStatus.INTERNAL_SERVER_ERROR, 0, e.message, null)
+        return ResultResponse(99999, e.message)
     }
 }
