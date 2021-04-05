@@ -2,7 +2,7 @@ package com.kt.v1.demo.entity
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.redis.core.RedisHash
-import org.springframework.data.redis.core.TimeToLive
+import org.springframework.data.redis.core.index.Indexed
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.GeneratedValue
@@ -13,7 +13,7 @@ import javax.persistence.Id
 data class RedisLmsAdmin(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "uid") var uid: Long = 0L,
-    @Column(name = "user_id", nullable = false) var userId: String = "",
+    @Indexed @Column(name = "user_id", nullable = false) var userId: String = "",
     @Column(name = "user_pass", nullable = false) var userPass: String = "",
     @Column(name = "name", nullable = false) var name: String = "",
     @Column(name = "tel", nullable = false) var tel: String = "",
