@@ -7,6 +7,9 @@ server:
 logging:
   level:
     web: debug
+  file:
+    name: service.log
+
 
 spring:
   datasource:
