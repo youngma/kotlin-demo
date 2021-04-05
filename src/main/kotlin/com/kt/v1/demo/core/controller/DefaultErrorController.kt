@@ -1,5 +1,6 @@
 package com.kt.v1.demo.core.controller
 
+import com.kt.v1.demo.core.logger.Log
 import lombok.extern.slf4j.Slf4j
 import org.reflections.Reflections.log
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +16,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.util.ObjectUtils
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
@@ -28,7 +28,7 @@ class DefaultErrorController @Autowired constructor(
     var environment: Environment?,
     var serverProperties: ServerProperties,
     var errorAttributes: ErrorAttributes,
-    var messageSource: MessageSource
+    var messageSource: MessageSource,
     ) : AbstractErrorController(errorAttributes) {
 
     companion object {
@@ -37,7 +37,7 @@ class DefaultErrorController @Autowired constructor(
     }
 
     @RequestMapping(ERROR_PATH)
-    fun error(request: WebRequest, locale: Locale): ResponseEntity<Map<String, Any>> {
+    fun error( request: WebRequest, locale: Locale): ResponseEntity<Map<String, Any>> {
 
         val body = errorAttributes.getErrorAttributes(request,  ErrorAttributeOptions.defaults())
         val status = when(body["status"]) {

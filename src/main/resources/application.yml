@@ -6,9 +6,18 @@ server:
 
 logging:
   level:
-    web: debug
+    root: "warn"
+    com.kt.v1: "debug"
+    org.springframework.web: "debug"
+    org.hibernate: "info"
   file:
     name: service.log
+    path: logs
+  logback:
+    rollingpolicy:
+      max-history: 30
+  register-shutdown-hook: true
+
 
 
 spring:

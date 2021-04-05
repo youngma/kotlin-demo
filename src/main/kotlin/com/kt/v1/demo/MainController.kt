@@ -2,6 +2,7 @@ package com.kt.v1.demo
 
 import com.kt.v1.demo.core.exception.CustomException
 import com.kt.v1.demo.core.exception.ServiceException
+import com.kt.v1.demo.core.logger.Log
 import com.kt.v1.demo.core.wapper.ResultResponse
 import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
@@ -21,6 +22,8 @@ class MainController(
     private val lmsAdminService: LmsAdminService
     ) {
 
+    companion object: Log
+
     @GetMapping("/first/{times}" )
     fun firstPage(@PathVariable times: Int? = 0): Model {
         return Model("First", times)
@@ -34,6 +37,7 @@ class MainController(
     @GetMapping("/admin/{userId}")
     fun getAdmin(@PathVariable userId: String): ResultResponse<LmsAdminDto> {
         val user = lmsAdminService.findAdmin(userId)
+        logger.info("### {}" , user)
         return ResultResponse(user)
     }
 }
