@@ -36,6 +36,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation("commons-codec",  "commons-codec", "1.15")
+    implementation( "io.github.microutils",  "kotlin-logging-jvm",  "2.0.6")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 
