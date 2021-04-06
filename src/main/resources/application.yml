@@ -12,13 +12,11 @@ logging:
     org.hibernate: "info"
   file:
     name: service.log
-    path: logs
+    path: ./logs
   logback:
     rollingpolicy:
       max-history: 30
   register-shutdown-hook: true
-
-
 
 spring:
   datasource:
@@ -30,3 +28,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     database: mysql
     show-sql: true
+    open-in-view: false
+
+  cache:
+    type: redis
+    cache-names: "ca1, ca2"
+
