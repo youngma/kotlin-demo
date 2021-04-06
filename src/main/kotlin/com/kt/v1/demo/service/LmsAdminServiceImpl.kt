@@ -5,9 +5,9 @@ import com.kt.v1.demo.core.exception.ServiceException
 import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
 import com.kt.v1.demo.mapper.LmsAdminMapper
-import com.kt.v1.demo.mapper.LmsAdminMapperImpl
 import com.kt.v1.demo.repository.LmsAdminRepository
 import com.kt.v1.demo.repository.QLmsAdminRepository
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -16,7 +16,8 @@ import org.springframework.transaction.annotation.Transactional
 class LmsAdminServiceImpl(
     private val lmsAdminMapper: LmsAdminMapper,
     private val qLmsAdminRepository: QLmsAdminRepository,
-    private val lmsAdminRepository: LmsAdminRepository
+    private val lmsAdminRepository: LmsAdminRepository,
+    private var kafkaTemplate: KafkaTemplate<String, Any>
     ) : LmsAdminService {
 
     override fun selectAllAdmins(): List<LmsAdminDto> {
@@ -40,10 +41,13 @@ class LmsAdminServiceImpl(
     }
 
     override fun findAdmin(userId: String): LmsAdminDto {
-
         val admin = lmsAdminRepository.findAllByUserId(userId)
             ?: throw ServiceException(CustomException.LOGIN_INFORMATION_NOT_FOUND)
 
-        return lmsAdminMapper.fromLmsAdmin(admin)
+        val retAdmin = lmsAdminMapper.fromLmsAdmin(admin)
+
+        kafkaTemplate.send("totic_lms_admin_status", retAdmin.userId, retAdmin)
+
+        return retAdmin
     }
 }
