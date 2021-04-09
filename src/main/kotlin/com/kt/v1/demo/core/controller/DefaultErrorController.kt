@@ -2,6 +2,8 @@ package com.kt.v1.demo.core.controller
 
 import lombok.extern.slf4j.Slf4j
 import org.reflections.Reflections.log
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.config.BeanPostProcessor
@@ -31,6 +33,8 @@ class DefaultErrorController @Autowired constructor(
     var messageSource: MessageSource
     ) : AbstractErrorController(errorAttributes) {
 
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
     companion object {
         const val ERROR_PATH = "\${error.path:/error}"
         const val ERROR_DEFAULT_MESSAGE = "No message available."
@@ -40,6 +44,8 @@ class DefaultErrorController @Autowired constructor(
     fun error(request: WebRequest, locale: Locale): ResponseEntity<Map<String, Any>> {
 
         val body = errorAttributes.getErrorAttributes(request,  ErrorAttributeOptions.defaults())
+
+        log.error("error body {}", body)
         val status = when(body["status"]) {
             is Int -> HttpStatus.valueOf(body["status"] as Int)
             else -> HttpStatus.INTERNAL_SERVER_ERROR

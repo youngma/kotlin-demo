@@ -4,7 +4,8 @@ import com.kt.v1.demo.core.exception.ServiceException
 import com.kt.v1.demo.core.exception.UnauthorizedException
 import com.kt.v1.demo.core.wapper.ResultResponse
 import lombok.extern.slf4j.Slf4j
-import org.reflections.Reflections.log
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.FieldError
@@ -19,10 +20,12 @@ import javax.xml.bind.ValidationException
 @RestControllerAdvice
 class ControllerExceptionAdvice {
 
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
     @ExceptionHandler(ServiceException::class)
     fun handleException(e: ServiceException): ResponseEntity<Any?> {
         val resultResponse = ResultResponse<Any?>( e.code, e.message)
-        log?.debug("#### {}", resultResponse)
+        log.debug("#### {}", resultResponse)
         return ResponseEntity(resultResponse, e.httpStatus)
     }
 
@@ -30,7 +33,7 @@ class ControllerExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleValidateException(e: Exception): ResultResponse<Any?> {
         val resultResponse = ResultResponse<Any?>(40099, e.message)
-        log?.warn("#### {}", e.stackTrace as Any)
+        log.warn("#### {}", e.stackTrace as Any)
         return resultResponse
     }
 
@@ -47,7 +50,7 @@ class ControllerExceptionAdvice {
                 )
             }
         resultResponse.message = (errorMessages.joinToString { ", " })
-        log?.warn("#### {}", e.stackTrace as Any)
+        log.warn("#### {}", e.stackTrace as Any)
         return resultResponse
     }
 
@@ -58,15 +61,16 @@ class ControllerExceptionAdvice {
     )
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     fun handleException(e: AccessDeniedException): ResultResponse<Any?> {
+        log.warn("#### {}", e.toString())
         return ResultResponse(40100, e.message)
     }
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     fun handleException(e: Exception): ResultResponse<Any?> {
-        log?.warn("#### {}", e.toString())
+        log.warn("#### {}", e.toString())
         for (stack in e.stackTrace) {
-            log?.warn("#### {}", stack)
+            log.warn("#### {}", stack)
         }
         return ResultResponse(99999, e.message)
     }
