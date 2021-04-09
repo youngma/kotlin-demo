@@ -34,6 +34,8 @@ dependencies {
     implementation("com.querydsl:querydsl-jpa:4.2.1")
     implementation("org.mapstruct:mapstruct:1.3.0.Final")
 
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation("commons-codec",  "commons-codec", "1.15")
 
@@ -45,15 +47,19 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:1.3.0.Final")
     kaptTest("org.mapstruct:mapstruct-processor:1.3.0.Final")
 
-    compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("mysql:mysql-connector-java")
+
+    compileOnly(group = "io.jsonwebtoken", name = "jjwt-api", version = "0.11.2")
+    runtimeOnly(group = "io.jsonwebtoken", name = "jjwt-impl", version = "0.11.2")
+    runtimeOnly(group = "io.jsonwebtoken", name = "jjwt-jackson", version = "0.11.2")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor(group = "com.querydsl", name = "querydsl-apt", classifier = "jpa")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 sourceSets["main"].withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
