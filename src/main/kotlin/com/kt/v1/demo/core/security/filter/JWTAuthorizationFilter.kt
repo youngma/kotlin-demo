@@ -34,15 +34,16 @@ class JWTAuthorizationFilter(
 
         log.info("### JWTAuthorizationFilter")
 
-
         val header = req.getHeader(securityProperties.headerString)
         if (header == null || !header.startsWith(securityProperties.tokenPrefix)) {
             chain.doFilter(req, res)
             return
         }
+
         getAuthentication(header).also {
             SecurityContextHolder.getContext().authentication = it
         }
+
         chain.doFilter(req, res)
     }
 
