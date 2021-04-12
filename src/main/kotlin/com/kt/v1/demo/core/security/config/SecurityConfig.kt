@@ -7,12 +7,10 @@ import com.kt.v1.demo.core.security.vo.SecurityProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
-import org.springframework.security.authentication.CachingUserDetailsService
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -23,22 +21,16 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
-    val bCryptPasswordEncoder: BCryptPasswordEncoder,
     val securityProperties: SecurityProperties,
     var userDetailsService: CustomUserDetailsService,
 ): WebSecurityConfigurerAdapter() {
 
-    @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsService)
-            .passwordEncoder(bCryptPasswordEncoder)
-    }
-
-    override fun configure(web: WebSecurity) {
-        super.configure(web)
-    }
-
     override fun configure(http: HttpSecurity) {
+
+
+        val jWTAuthenticationFilter =JWTAuthenticationFilter(authenticationManager(), securityProperties)
+        jWTAuthenticationFilter.setFilterProcessesUrl("/login2")
+
         http
             .cors().and()
             .csrf().disable()
@@ -47,20 +39,27 @@ class SecurityConfig(
             .authorizeRequests()
             .antMatchers("/api/**").permitAll()
             .antMatchers("/error/**").permitAll()
+            .antMatchers("/favicon.ico").permitAll()
             .antMatchers(HttpMethod.POST, "/login").permitAll()
             .anyRequest().authenticated()
             .and()
-            .addFilter(JWTAuthenticationFilter(authenticationManager(), securityProperties))
+            .addFilter(jWTAuthenticationFilter)
             .addFilter(JWTAuthorizationFilter(authenticationManager(), securityProperties))
     }
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder = BCryptPasswordEncoder(securityProperties.strength)
 
+    @Throws(Exception::class)
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(bCryptPasswordEncoder())
+    }
+
     @Bean
     fun authProvider(): DaoAuthenticationProvider = DaoAuthenticationProvider().apply {
         setUserDetailsService(userDetailsService)
-        setPasswordEncoder(bCryptPasswordEncoder)
+        setPasswordEncoder(bCryptPasswordEncoder())
     }
 
     @Bean

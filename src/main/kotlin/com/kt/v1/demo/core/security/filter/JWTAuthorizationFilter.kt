@@ -3,6 +3,8 @@ package com.kt.v1.demo.core.security.filter
 import com.kt.v1.demo.core.security.vo.SecurityProperties
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.GrantedAuthority
@@ -21,12 +23,18 @@ class JWTAuthorizationFilter(
     private val securityProperties: SecurityProperties
 ) : BasicAuthenticationFilter(authManager) {
 
+    private var log: Logger = LoggerFactory.getLogger(this::class.java)
+
     @Throws(IOException::class, ServletException::class)
     override fun doFilterInternal(
         req: HttpServletRequest,
         res: HttpServletResponse,
         chain: FilterChain
     ) {
+
+        log.info("### JWTAuthorizationFilter")
+
+
         val header = req.getHeader(securityProperties.headerString)
         if (header == null || !header.startsWith(securityProperties.tokenPrefix)) {
             chain.doFilter(req, res)
