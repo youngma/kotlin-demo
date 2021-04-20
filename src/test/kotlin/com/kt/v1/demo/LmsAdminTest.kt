@@ -18,7 +18,7 @@ class LmsAdminTest {
 
     @Test
     @DisplayName("LMS ADMIN 등록 #1")
-    fun testAddLmsAdmin(){
+    fun testAddLmsAdmin() {
         val lmsAdmin = LmsAdminDto()
         lmsAdmin.userId = "test_symm2212"
         lmsAdmin.userPass = "password"
@@ -31,7 +31,7 @@ class LmsAdminTest {
 
     @Test
     @DisplayName("LMS ADMIN 전체조회 #1")
-    fun testLmsAdminAllList(){
+    fun testLmsAdminAllList() {
         val list: List<LmsAdminDto> = lmsAdminService.selectAllAdmins()
 
 //        list.map{ admin -> System.out.println(admin)}

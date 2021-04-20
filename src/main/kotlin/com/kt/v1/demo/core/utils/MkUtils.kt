@@ -2,7 +2,7 @@ package com.kt.v1.demo.core.utils
 
 import java.security.MessageDigest
 
-enum class HashAlgorithm(override val value: String): HasValue<String>  {
+enum class HashAlgorithm(override val value: String) : HasValue<String> {
     MD5("MD5"), SHA256("SHA-256");
     companion object : EnumConverter<String, HashAlgorithm>(buildValueMap())
 }
@@ -22,6 +22,4 @@ private fun hashString(input: String, algorithm: HashAlgorithm): String {
         .fold("", { str, it -> str + "%02x".format(it) })
 }
 
-class MkUtils {
-
-}
+class MkUtils

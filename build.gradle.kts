@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.4.4"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.0.0"
+
     kotlin("jvm") version "1.4.31"
     kotlin("plugin.spring") version "1.4.31"
     kotlin("plugin.jpa") version "1.4.31"
@@ -26,7 +29,7 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation( "org.javassist", "javassist", "3.27.0-GA")
+    implementation("org.javassist", "javassist", "3.27.0-GA")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -35,7 +38,7 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.3.0.Final")
 
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    implementation("commons-codec",  "commons-codec", "1.15")
+    implementation("commons-codec", "commons-codec", "1.15")
 
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 

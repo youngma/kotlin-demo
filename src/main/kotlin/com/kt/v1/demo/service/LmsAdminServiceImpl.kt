@@ -5,7 +5,6 @@ import com.kt.v1.demo.core.exception.ServiceException
 import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
 import com.kt.v1.demo.mapper.LmsAdminMapper
-import com.kt.v1.demo.mapper.LmsAdminMapperImpl
 import com.kt.v1.demo.repository.LmsAdminRepository
 import com.kt.v1.demo.repository.QLmsAdminRepository
 import org.springframework.stereotype.Service
@@ -17,7 +16,7 @@ class LmsAdminServiceImpl(
     private val lmsAdminMapper: LmsAdminMapper,
     private val qLmsAdminRepository: QLmsAdminRepository,
     private val lmsAdminRepository: LmsAdminRepository
-    ) : LmsAdminService {
+) : LmsAdminService {
 
     override fun selectAllAdmins(): List<LmsAdminDto> {
         val admins: List<LmsAdmin> = qLmsAdminRepository.selectAllAdmins()
@@ -32,7 +31,7 @@ class LmsAdminServiceImpl(
             throw Exception("이미 등록된 사용자 입니다.")
         }
 
-        lmsAdminDto.encryptionPassword();
+        lmsAdminDto.encryptionPassword()
 
         val newAdmin: LmsAdmin = lmsAdminMapper.addLmsAdmin(lmsAdminDto)
         lmsAdminRepository.save(newAdmin)

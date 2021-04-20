@@ -21,7 +21,7 @@ class ControllerExceptionAdvice {
 
     @ExceptionHandler(ServiceException::class)
     fun handleException(e: ServiceException): ResponseEntity<Any?> {
-        val resultResponse = ResultResponse<Any?>( e.code, e.message)
+        val resultResponse = ResultResponse<Any?>(e.code, e.message)
         log?.debug("#### {}", resultResponse)
         return ResponseEntity(resultResponse, e.httpStatus)
     }

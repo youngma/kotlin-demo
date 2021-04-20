@@ -1,8 +1,5 @@
 package com.kt.v1.demo.core.wapper
 
-import org.springframework.http.HttpStatus
-
-
 class ResultResponse<T> {
 
 //    var status: Int? = 0
@@ -23,7 +20,7 @@ class ResultResponse<T> {
         this.result = result
     }
 
-    constructor( code: Int, message: String? = null) {
+    constructor(code: Int, message: String? = null) {
 //        this.status = httpStatus.value()
         this.code = code
         this.message = message

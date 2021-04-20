@@ -6,7 +6,7 @@ open class ServiceException(
     val httpStatus: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
     val code: Int = 0,
     override val message: String?
-): RuntimeException() {
+) : RuntimeException() {
 
     constructor(customException: CustomException) : this(
         code = customException.errorCode,

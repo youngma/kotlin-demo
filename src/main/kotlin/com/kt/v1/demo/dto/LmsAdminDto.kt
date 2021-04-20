@@ -5,7 +5,7 @@ import com.kt.v1.demo.entity.UserLevel
 import com.kt.v1.demo.entity.isDeleted
 import java.time.LocalDateTime
 
-data class LmsAdminDto (
+data class LmsAdminDto(
     var uid: Long = 0,
     var userId: String = "",
     var userPass: String = "",

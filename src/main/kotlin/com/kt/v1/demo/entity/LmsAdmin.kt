@@ -42,13 +42,13 @@ class LmsAdmin(
 //    companion object : EnumConverter<Int, Size>(buildValueMap())
 //}
 
-enum class UserLevel(override val value: Int): HasValue<Int> {
+enum class UserLevel(override val value: Int) : HasValue<Int> {
     ADMIN(1),
     MANAGER(2);
     companion object : EnumConverter<Int, UserLevel>(buildValueMap())
 }
 
-enum class isDeleted(override val value: String): HasValue<String> {
+enum class isDeleted(override val value: String) : HasValue<String> {
     No("N"),
     Yes("Y");
     companion object : EnumConverter<String, isDeleted>(buildValueMap())

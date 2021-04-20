@@ -1,7 +1,6 @@
 package com.kt.v1.demo.core.controller
 
 import lombok.extern.slf4j.Slf4j
-import org.reflections.Reflections.log
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.config.BeanPostProcessor
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.util.ObjectUtils
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
@@ -29,7 +27,7 @@ class DefaultErrorController @Autowired constructor(
     var serverProperties: ServerProperties,
     var errorAttributes: ErrorAttributes,
     var messageSource: MessageSource
-    ) : AbstractErrorController(errorAttributes) {
+) : AbstractErrorController(errorAttributes) {
 
     companion object {
         const val ERROR_PATH = "\${error.path:/error}"
@@ -39,8 +37,8 @@ class DefaultErrorController @Autowired constructor(
     @RequestMapping(ERROR_PATH)
     fun error(request: WebRequest, locale: Locale): ResponseEntity<Map<String, Any>> {
 
-        val body = errorAttributes.getErrorAttributes(request,  ErrorAttributeOptions.defaults())
-        val status = when(body["status"]) {
+        val body = errorAttributes.getErrorAttributes(request, ErrorAttributeOptions.defaults())
+        val status = when (body["status"]) {
             is Int -> HttpStatus.valueOf(body["status"] as Int)
             else -> HttpStatus.INTERNAL_SERVER_ERROR
         }

@@ -1,7 +1,5 @@
 package com.kt.v1.demo
 
-import com.kt.v1.demo.core.exception.CustomException
-import com.kt.v1.demo.core.exception.ServiceException
 import com.kt.v1.demo.core.wapper.ResultResponse
 import com.kt.v1.demo.dto.LmsAdminDto
 import com.kt.v1.demo.entity.LmsAdmin
@@ -19,9 +17,9 @@ class MainController(
     private val lmsAdminRepository: LmsAdminRepository,
     private val lmsAdminMapper: LmsAdminMapper,
     private val lmsAdminService: LmsAdminService
-    ) {
+) {
 
-    @GetMapping("/first/{times}" )
+    @GetMapping("/first/{times}")
     fun firstPage(@PathVariable times: Int? = 0): Model {
         return Model("First", times)
     }
